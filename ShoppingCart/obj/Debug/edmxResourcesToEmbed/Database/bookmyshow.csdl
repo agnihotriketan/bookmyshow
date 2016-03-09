@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BookingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="BookingEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BookingSeatMappings" EntityType="BookingModel.BookingSeatMapping" />
+    <EntitySet Name="Movies" EntityType="BookingModel.Movie" />
+    <EntitySet Name="MovieBookings" EntityType="BookingModel.MovieBooking" />
+    <EntitySet Name="MTSMappings" EntityType="BookingModel.MTSMapping" />
+    <EntitySet Name="ShowTimings" EntityType="BookingModel.ShowTiming" />
+    <EntitySet Name="Theatres" EntityType="BookingModel.Theatre" />
+    <AssociationSet Name="FK_BookingSeatMapping_MovieBookings" Association="BookingModel.FK_BookingSeatMapping_MovieBookings">
+      <End Role="MovieBooking" EntitySet="MovieBookings" />
+      <End Role="BookingSeatMapping" EntitySet="BookingSeatMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MovieBookings_Movies" Association="BookingModel.FK_MovieBookings_Movies">
+      <End Role="Movie" EntitySet="Movies" />
+      <End Role="MovieBooking" EntitySet="MovieBookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MTSMapping_Movies" Association="BookingModel.FK_MTSMapping_Movies">
+      <End Role="Movie" EntitySet="Movies" />
+      <End Role="MTSMapping" EntitySet="MTSMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MovieBookings_ShowTimings" Association="BookingModel.FK_MovieBookings_ShowTimings">
+      <End Role="ShowTiming" EntitySet="ShowTimings" />
+      <End Role="MovieBooking" EntitySet="MovieBookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MovieBookings_Theatre" Association="BookingModel.FK_MovieBookings_Theatre">
+      <End Role="Theatre" EntitySet="Theatres" />
+      <End Role="MovieBooking" EntitySet="MovieBookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MTSMapping_ShowTimings" Association="BookingModel.FK_MTSMapping_ShowTimings">
+      <End Role="ShowTiming" EntitySet="ShowTimings" />
+      <End Role="MTSMapping" EntitySet="MTSMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MTSMapping_Theatre" Association="BookingModel.FK_MTSMapping_Theatre">
+      <End Role="Theatre" EntitySet="Theatres" />
+      <End Role="MTSMapping" EntitySet="MTSMappings" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="BookingSeatMapping">
+    <Key>
+      <PropertyRef Name="BookingShowSeatMappingId" />
+    </Key>
+    <Property Name="BookingShowSeatMappingId" Type="Int32" Nullable="false" />
+    <Property Name="BookingId" Type="Int32" />
+    <Property Name="SeatNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="MovieBooking" Relationship="BookingModel.FK_BookingSeatMapping_MovieBookings" FromRole="BookingSeatMapping" ToRole="MovieBooking" />
+  </EntityType>
+  <EntityType Name="Movie">
+    <Key>
+      <PropertyRef Name="MovieId" />
+    </Key>
+    <Property Name="MovieId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ImageUrl" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="Duration" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Medium" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="MovieBookings" Relationship="BookingModel.FK_MovieBookings_Movies" FromRole="Movie" ToRole="MovieBooking" />
+    <NavigationProperty Name="MTSMappings" Relationship="BookingModel.FK_MTSMapping_Movies" FromRole="Movie" ToRole="MTSMapping" />
+  </EntityType>
+  <EntityType Name="MovieBooking">
+    <Key>
+      <PropertyRef Name="BookingId" />
+    </Key>
+    <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="1000" FixedLength="true" Unicode="true" />
+    <Property Name="PaidStatus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="TheatreId" Type="Int32" Nullable="false" />
+    <Property Name="MovieId" Type="Int32" Nullable="false" />
+    <Property Name="ShowId" Type="Int32" Nullable="false" />
+    <Property Name="TicketAmount" Type="Double" Nullable="false" />
+    <Property Name="NoOfSeats" Type="Int32" Nullable="false" />
+    <Property Name="BookingDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ShowDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="BookingSeatMappings" Relationship="BookingModel.FK_BookingSeatMapping_MovieBookings" FromRole="MovieBooking" ToRole="BookingSeatMapping" />
+    <NavigationProperty Name="Movie" Relationship="BookingModel.FK_MovieBookings_Movies" FromRole="MovieBooking" ToRole="Movie" />
+    <NavigationProperty Name="ShowTiming" Relationship="BookingModel.FK_MovieBookings_ShowTimings" FromRole="MovieBooking" ToRole="ShowTiming" />
+    <NavigationProperty Name="Theatre" Relationship="BookingModel.FK_MovieBookings_Theatre" FromRole="MovieBooking" ToRole="Theatre" />
+  </EntityType>
+  <EntityType Name="MTSMapping">
+    <Key>
+      <PropertyRef Name="MTSMappingId" />
+    </Key>
+    <Property Name="MTSMappingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MovieId" Type="Int32" Nullable="false" />
+    <Property Name="TheatreId" Type="Int32" Nullable="false" />
+    <Property Name="ShowId" Type="Int32" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Movie" Relationship="BookingModel.FK_MTSMapping_Movies" FromRole="MTSMapping" ToRole="Movie" />
+    <NavigationProperty Name="ShowTiming" Relationship="BookingModel.FK_MTSMapping_ShowTimings" FromRole="MTSMapping" ToRole="ShowTiming" />
+    <NavigationProperty Name="Theatre" Relationship="BookingModel.FK_MTSMapping_Theatre" FromRole="MTSMapping" ToRole="Theatre" />
+  </EntityType>
+  <EntityType Name="ShowTiming">
+    <Key>
+      <PropertyRef Name="ShowId" />
+    </Key>
+    <Property Name="ShowId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Time" Type="Int32" Nullable="false" />
+    <Property Name="Rate" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="MovieBookings" Relationship="BookingModel.FK_MovieBookings_ShowTimings" FromRole="ShowTiming" ToRole="MovieBooking" />
+    <NavigationProperty Name="MTSMappings" Relationship="BookingModel.FK_MTSMapping_ShowTimings" FromRole="ShowTiming" ToRole="MTSMapping" />
+  </EntityType>
+  <EntityType Name="Theatre">
+    <Key>
+      <PropertyRef Name="TheatreId" />
+    </Key>
+    <Property Name="TheatreId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TheatreName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Rows" Type="Int32" Nullable="false" />
+    <Property Name="SeatsPerRows" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="NoOfSeats" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="MovieBookings" Relationship="BookingModel.FK_MovieBookings_Theatre" FromRole="Theatre" ToRole="MovieBooking" />
+    <NavigationProperty Name="MTSMappings" Relationship="BookingModel.FK_MTSMapping_Theatre" FromRole="Theatre" ToRole="MTSMapping" />
+  </EntityType>
+  <Association Name="FK_BookingSeatMapping_MovieBookings">
+    <End Type="BookingModel.MovieBooking" Role="MovieBooking" Multiplicity="0..1" />
+    <End Type="BookingModel.BookingSeatMapping" Role="BookingSeatMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MovieBooking">
+        <PropertyRef Name="BookingId" />
+      </Principal>
+      <Dependent Role="BookingSeatMapping">
+        <PropertyRef Name="BookingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MovieBookings_Movies">
+    <End Type="BookingModel.Movie" Role="Movie" Multiplicity="1" />
+    <End Type="BookingModel.MovieBooking" Role="MovieBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Movie">
+        <PropertyRef Name="MovieId" />
+      </Principal>
+      <Dependent Role="MovieBooking">
+        <PropertyRef Name="MovieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MTSMapping_Movies">
+    <End Type="BookingModel.Movie" Role="Movie" Multiplicity="1" />
+    <End Type="BookingModel.MTSMapping" Role="MTSMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Movie">
+        <PropertyRef Name="MovieId" />
+      </Principal>
+      <Dependent Role="MTSMapping">
+        <PropertyRef Name="MovieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MovieBookings_ShowTimings">
+    <End Type="BookingModel.ShowTiming" Role="ShowTiming" Multiplicity="1" />
+    <End Type="BookingModel.MovieBooking" Role="MovieBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShowTiming">
+        <PropertyRef Name="ShowId" />
+      </Principal>
+      <Dependent Role="MovieBooking">
+        <PropertyRef Name="ShowId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MovieBookings_Theatre">
+    <End Type="BookingModel.Theatre" Role="Theatre" Multiplicity="1" />
+    <End Type="BookingModel.MovieBooking" Role="MovieBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Theatre">
+        <PropertyRef Name="TheatreId" />
+      </Principal>
+      <Dependent Role="MovieBooking">
+        <PropertyRef Name="TheatreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MTSMapping_ShowTimings">
+    <End Type="BookingModel.ShowTiming" Role="ShowTiming" Multiplicity="1" />
+    <End Type="BookingModel.MTSMapping" Role="MTSMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShowTiming">
+        <PropertyRef Name="ShowId" />
+      </Principal>
+      <Dependent Role="MTSMapping">
+        <PropertyRef Name="ShowId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MTSMapping_Theatre">
+    <End Type="BookingModel.Theatre" Role="Theatre" Multiplicity="1" />
+    <End Type="BookingModel.MTSMapping" Role="MTSMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Theatre">
+        <PropertyRef Name="TheatreId" />
+      </Principal>
+      <Dependent Role="MTSMapping">
+        <PropertyRef Name="TheatreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

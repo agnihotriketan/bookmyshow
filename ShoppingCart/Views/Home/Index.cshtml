@@ -1,0 +1,56 @@
+﻿@using System.Web.Script.Serialization;
+@{
+    ViewBag.Title = "Home";
+}  
+<div class="jumbotron">
+    <h1>MVC Guide</h1>
+    <p class="lead">I am creating a helper project to understand MVC Features, Solid architecture, Performance oriented mvc web responsive app</p>
+    <p>
+        <a class="btn btn-default fa fa-arrow-circle-o-left" id="getJson"> Get Json</a>
+
+        <a class="btn btn-default fa fa-arrow-circle-o-right" id="postJson"> Post Json</a>
+    </p>
+    <h2>JavaScriptSerializer used & Output is as follows</h2>
+    <h6>@ViewBag.JsonCustomerString</h6>
+    <h3>MVC Helper Used</h3>
+    @MyHelpers.MakeNote("My test note content.")
+   
+    @Html.Action("ChildActionDemo","Home")
+     <h3>HtmlHelperExtensions</h3>
+    @Html.CustomTextBox("custom_txtbox","Custom Helper Method Used to create me..", "form-control")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        var getJson = $("#getJson");
+        var postJson = $("#postJson");
+
+        var getUrl = "@Url.Action("GetAction", "Home")";
+        var postUrl = "@Url.Action("GetAction", "Home")";
+
+        getJson.click(manageGet(getUrl));
+        @{
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            var JsonCustomerString = serializer.Serialize(ViewBag.User).ToString();
+         }
+
+        //Converted to json object which might be used by javascript functions
+        var user = "@Html.Raw(JsonCustomerString)";
+
+        function manageGet(getUrl) {
+            $.getJSON(getUrl).done(function (e) {
+                toastr.success(e.Email + " - - - " + e.Password);
+            });
+        }
+
+        postJson.click(function () {
+            var data = { "Email": "RajuMishra@gmail.com", "Password": "Ketan$123" };
+
+            $.post(postUrl, data).done(function (status) {
+                    if (status)
+                        toastr.success("Data Posted");
+            });
+        });
+    </script>
+}

@@ -1,0 +1,58 @@
+﻿@model ShoppingCart.Database.MTSMapping
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MTSMapping</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Movie.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Movie.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShowTiming.ShowId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShowTiming.ShowId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Theatre.TheatreName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Theatre.TheatreName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MTSMappingId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
