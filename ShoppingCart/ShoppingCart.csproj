@@ -241,6 +241,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>bookmyshow.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Database\City.cs">
+      <DependentUpon>bookmyshow.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Country.cs">
+      <DependentUpon>bookmyshow.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\Movie.cs">
       <DependentUpon>bookmyshow.tt</DependentUpon>
     </Compile>
@@ -251,6 +257,9 @@
       <DependentUpon>bookmyshow.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\ShowTiming.cs">
+      <DependentUpon>bookmyshow.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\State.cs">
       <DependentUpon>bookmyshow.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Theatre.cs">

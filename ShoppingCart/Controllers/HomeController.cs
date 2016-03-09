@@ -1,4 +1,5 @@
-﻿using ShoppingCart.Models;
+﻿using ShoppingCart.Database;
+using ShoppingCart.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -9,8 +10,8 @@ using System.Web.Script.Serialization;
 
 namespace ShoppingCart.Controllers
 {
-   
-    [AllowAnonymous] 
+
+    [AllowAnonymous]
     public class HomeController : Controller
     {
 
@@ -19,6 +20,23 @@ namespace ShoppingCart.Controllers
         [Route("clients")]
         public ActionResult Index()
         {
+            using (var db = new BookingEntities())
+            {
+                var data = db.Countries;
+                var list = new List<SelectListItem>();
+                foreach (var item in data)
+                {
+                    list.Add(new SelectListItem
+                    {
+                        Text = item.CountryName,
+                        Value = item.CountryId.ToString()
+                    });
+                }
+                ViewBag.Country = list;
+            }
+            ViewBag.State = new List<SelectListItem>();
+            ViewBag.City = new List<SelectListItem>();
+
             LoginViewModel customer = new LoginViewModel()
             {
                 Email = "RajuMishra@gmail.com",
@@ -80,5 +98,78 @@ namespace ShoppingCart.Controllers
         {
             return "Child Action Called..";
         }
+
+        [HttpGet]
+        public ActionResult GetCountry()
+        {
+            try
+            {
+                using (var db = new BookingEntities())
+                {
+                    var data = db.Countries.ToList();
+                    return Json(data, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet]
+        public ActionResult GetState(int id)
+        {
+            try
+            {
+                using (var db = new BookingEntities())
+                {
+                    var data = db.States.Where(i => i.CountryId == id).ToList();
+                    var list = new List<SelectListItem>();
+                    foreach (var item in data)
+                    {
+                        list.Add(new SelectListItem
+                        {
+                            Text = item.StateName,
+                            Value = item.StateId.ToString()
+                        });
+                    }
+
+                    return Json(list, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet]
+        public ActionResult GetCity(int id)
+        {
+            try
+            {
+                using (var db = new BookingEntities())
+                {
+                    var data = db.Cities.Where(i => i.StateId == id).ToList();
+                    var list = new List<SelectListItem>();
+                    foreach (var item in data)
+                    {
+                        list.Add(new SelectListItem
+                        {
+                            Text = item.CityName,
+                            Value = item.CityId.ToString()
+                        });
+                    }
+
+                    return Json(list, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 }

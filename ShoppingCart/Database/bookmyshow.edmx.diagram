@@ -18,6 +18,11 @@
         <AssociationConnector Association="BookingModel.FK_MovieBookings_Theatre" />
         <AssociationConnector Association="BookingModel.FK_MTSMapping_ShowTimings" />
         <AssociationConnector Association="BookingModel.FK_MTSMapping_Theatre" />
+        <EntityTypeShape EntityType="BookingModel.City" Width="1.5" PointX="9.875" PointY="1" />
+        <EntityTypeShape EntityType="BookingModel.Country" Width="1.5" PointX="5.375" PointY="1.125" />
+        <EntityTypeShape EntityType="BookingModel.State" Width="1.5" PointX="7.625" PointY="0.875" />
+        <AssociationConnector Association="BookingModel.FK_City_State" />
+        <AssociationConnector Association="BookingModel.FK_State_Country" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

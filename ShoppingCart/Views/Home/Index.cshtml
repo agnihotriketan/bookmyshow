@@ -1,7 +1,7 @@
 ﻿@using System.Web.Script.Serialization;
 @{
     ViewBag.Title = "Home";
-}  
+}
 <div class="jumbotron">
     <h1>MVC Guide</h1>
     <p class="lead">I am creating a helper project to understand MVC Features, Solid architecture, Performance oriented mvc web responsive app</p>
@@ -14,12 +14,29 @@
     <h6>@ViewBag.JsonCustomerString</h6>
     <h3>MVC Helper Used</h3>
     @MyHelpers.MakeNote("My test note content.")
-   
-    @Html.Action("ChildActionDemo","Home")
-     <h3>HtmlHelperExtensions</h3>
-    @Html.CustomTextBox("custom_txtbox","Custom Helper Method Used to create me..", "form-control")
-</div>
 
+    @Html.Action("ChildActionDemo", "Home")
+    <h3>HtmlHelperExtensions</h3>
+    @Html.CustomTextBox("custom_txtbox", "Custom Helper Method Used to create me..", "form-control")
+</div>
+<h2>Cascaded DropDown</h2>
+<div class="row">
+    <div class="col-md-4">
+        @Html.Label("Country")
+        @Html.DropDownList("Country", ViewBag.Country as SelectList, "Select a Country", new { id = "Country" })
+        @Html.ValidationMessage("Country", "*")
+    </div>
+    <div class="col-md-4">
+        @Html.Label("State")
+        @Html.DropDownList("State", ViewBag.State as SelectList, "Select a State", new { id = "State" })
+        @Html.ValidationMessage("State", "*")
+    </div>
+    <div class="col-md-4">
+        @Html.Label("City")
+        @Html.DropDownList("City", ViewBag.City as SelectList, "Select a City", new { id = "City" })
+        @Html.ValidationMessage("City", "*")
+    </div>
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
@@ -48,8 +65,42 @@
             var data = { "Email": "RajuMishra@gmail.com", "Password": "Ketan$123" };
 
             $.post(postUrl, data).done(function (status) {
-                    if (status)
-                        toastr.success("Data Posted");
+                if (status)
+                    toastr.success("Data Posted");
+            });
+        });
+    </script>
+
+    <script type="text/jscript">
+        $(function () {
+            var urlCountry = "@Url.Action("GetCountry", "Home")";
+            var urlState = "@Url.Action("GetState", "Home")";
+            var urlCity = "@Url.Action("GetCity", "Home")";
+            //$('#Country').change(function () {
+            //    $.getJSON(url, function (data) {
+            //        $.each(data, function (i, country) {
+            //            items += "<option value='" + country.Value + "'>" + country.Text + "</option>";
+            //        });
+            //        $('#Country').html(items);
+            //    });
+            //});
+            $('#Country').change(function () {
+                $.getJSON(urlState + "/" + $('#Country').val(), function (data) {
+                    var items = "<option value='0'>Select</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        items += "<option value='" + data[i].Value + "'>" + data[i].Text + "</option>";
+                    } 
+                    $('#State').html(items);
+                });
+            });
+            $('#State').change(function () {
+                $.getJSON(urlCity + "/" + $('#State').val(), function (data) {
+                    var items = "<option value='0'>Select</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        items += "<option value='" + data[i].Value + "'>" + data[i].Text + "</option>";
+                    }
+                    $('#City').html(items);
+                });
             });
         });
     </script>
