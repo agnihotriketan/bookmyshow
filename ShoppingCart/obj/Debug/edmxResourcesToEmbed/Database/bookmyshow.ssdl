@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BookingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BookingSeatMapping">
+    <Key>
+      <PropertyRef Name="BookingShowSeatMappingId" />
+    </Key>
+    <Property Name="BookingShowSeatMappingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BookingId" Type="int" />
+    <Property Name="SeatNo" Type="varchar" MaxLength="20" />
+    <Property Name="RowNo" Type="int" />
+    <Property Name="ColumnNo" Type="int" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityId" />
+    </Key>
+    <Property Name="CityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CityName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="StateId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryId" />
+    </Key>
+    <Property Name="CountryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountryName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Movie">
+    <Key>
+      <PropertyRef Name="MovieId" />
+    </Key>
+    <Property Name="MovieId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="ImageUrl" Type="varchar" MaxLength="1000" />
+    <Property Name="Duration" Type="int" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="500" />
+    <Property Name="Medium" Type="varchar" MaxLength="60" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="MovieBookings">
+    <Key>
+      <PropertyRef Name="BookingId" />
+    </Key>
+    <Property Name="BookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="MTSMappingID" Type="int" Nullable="false" />
+    <Property Name="PaidStatus" Type="varchar" MaxLength="50" />
+    <Property Name="TicketAmount" Type="float" Nullable="false" />
+    <Property Name="NoOfSeats" Type="int" Nullable="false" />
+    <Property Name="BookingDate" Type="datetime" Nullable="false" />
+    <Property Name="ShowDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MTSMapping">
+    <Key>
+      <PropertyRef Name="MTSMappingId" />
+    </Key>
+    <Property Name="MTSMappingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MovieId" Type="int" Nullable="false" />
+    <Property Name="TheatreId" Type="int" Nullable="false" />
+    <Property Name="ShowId" Type="int" Nullable="false" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="ShowTimings">
+    <Key>
+      <PropertyRef Name="ShowId" />
+    </Key>
+    <Property Name="ShowId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Time" Type="int" Nullable="false" />
+    <Property Name="Rate" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="StateId" />
+    </Key>
+    <Property Name="StateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StateName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CountryId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Theatre">
+    <Key>
+      <PropertyRef Name="TheatreId" />
+    </Key>
+    <Property Name="TheatreId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TheatreName" Type="varchar" MaxLength="100" />
+    <Property Name="Rows" Type="int" Nullable="false" />
+    <Property Name="SeatsPerRows" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="NoOfSeats" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_BookingSeatMapping_MovieBookings">
+    <End Role="MovieBookings" Type="Self.MovieBookings" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BookingSeatMapping" Type="Self.BookingSeatMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MovieBookings">
+        <PropertyRef Name="BookingId" />
+      </Principal>
+      <Dependent Role="BookingSeatMapping">
+        <PropertyRef Name="BookingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_City_State">
+    <End Role="State" Type="Self.State" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="City" Type="Self.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="City">
+        <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MovieBookings_MTSMapping">
+    <End Role="MTSMapping" Type="Self.MTSMapping" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MovieBookings" Type="Self.MovieBookings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MTSMapping">
+        <PropertyRef Name="MTSMappingId" />
+      </Principal>
+      <Dependent Role="MovieBookings">
+        <PropertyRef Name="MTSMappingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MTSMapping_Movies">
+    <End Role="Movie" Type="Self.Movie" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MTSMapping" Type="Self.MTSMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Movie">
+        <PropertyRef Name="MovieId" />
+      </Principal>
+      <Dependent Role="MTSMapping">
+        <PropertyRef Name="MovieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MTSMapping_ShowTimings">
+    <End Role="ShowTimings" Type="Self.ShowTimings" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MTSMapping" Type="Self.MTSMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShowTimings">
+        <PropertyRef Name="ShowId" />
+      </Principal>
+      <Dependent Role="MTSMapping">
+        <PropertyRef Name="ShowId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MTSMapping_Theatre">
+    <End Role="Theatre" Type="Self.Theatre" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MTSMapping" Type="Self.MTSMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Theatre">
+        <PropertyRef Name="TheatreId" />
+      </Principal>
+      <Dependent Role="MTSMapping">
+        <PropertyRef Name="TheatreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_State_Country">
+    <End Role="Country" Type="Self.Country" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="State" Type="Self.State" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="State">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BookingModelStoreContainer">
+    <EntitySet Name="BookingSeatMapping" EntityType="Self.BookingSeatMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Movie" EntityType="Self.Movie" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MovieBookings" EntityType="Self.MovieBookings" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MTSMapping" EntityType="Self.MTSMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ShowTimings" EntityType="Self.ShowTimings" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Theatre" EntityType="Self.Theatre" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_BookingSeatMapping_MovieBookings" Association="Self.FK_BookingSeatMapping_MovieBookings">
+      <End Role="MovieBookings" EntitySet="MovieBookings" />
+      <End Role="BookingSeatMapping" EntitySet="BookingSeatMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_City_State" Association="Self.FK_City_State">
+      <End Role="State" EntitySet="State" />
+      <End Role="City" EntitySet="City" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MovieBookings_MTSMapping" Association="Self.FK_MovieBookings_MTSMapping">
+      <End Role="MTSMapping" EntitySet="MTSMapping" />
+      <End Role="MovieBookings" EntitySet="MovieBookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MTSMapping_Movies" Association="Self.FK_MTSMapping_Movies">
+      <End Role="Movie" EntitySet="Movie" />
+      <End Role="MTSMapping" EntitySet="MTSMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MTSMapping_ShowTimings" Association="Self.FK_MTSMapping_ShowTimings">
+      <End Role="ShowTimings" EntitySet="ShowTimings" />
+      <End Role="MTSMapping" EntitySet="MTSMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MTSMapping_Theatre" Association="Self.FK_MTSMapping_Theatre">
+      <End Role="Theatre" EntitySet="Theatre" />
+      <End Role="MTSMapping" EntitySet="MTSMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_State_Country" Association="Self.FK_State_Country">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="State" EntitySet="State" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

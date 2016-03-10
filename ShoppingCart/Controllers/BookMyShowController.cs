@@ -163,12 +163,32 @@ namespace ShoppingCart.Controllers
             }
         }
 
+        [HttpPost]
+        public bool FinalBookMyShow(MovieBooking obj)
+        {
+            try
+            {
+                using (var db = new BookingEntities())
+                {
+                    db.MovieBookings.Add(obj);
+                    db.BookingSeatMappings.Add(new BookingSeatMapping { });
+                    db.SaveChangesAsync();
+
+                }
+                    return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+        }
+
         public class SeatMaData
         {
             public int Row { get; set; }
             public int Column { get; set; }
-            public List<BookingSeatMapping> BookedSeatsForTheShow;
-
+            public List<BookingSeatMapping> BookedSeatsForTheShow; 
         }
 
     }
