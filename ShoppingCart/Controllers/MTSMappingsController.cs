@@ -41,7 +41,7 @@ namespace ShoppingCart.Controllers
         public ActionResult Create()
         {
             ViewBag.MovieId = new SelectList(db.Movies, "MovieId", "Name");
-            ViewBag.ShowId = new SelectList(db.ShowTimings, "ShowId", "ShowId");
+            ViewBag.Shows = ViewBag.ShowId = new SelectList(db.ShowTimings, "ShowId", "Time");
             ViewBag.TheatreId = new SelectList(db.Theatres, "TheatreId", "TheatreName");
             return View();
         }
@@ -51,17 +51,30 @@ namespace ShoppingCart.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "MTSMappingId,MovieId,TheatreId,ShowId,StartDate,EndDate")] MTSMapping mTSMapping)
+        public async Task<ActionResult> Create([Bind(Include = "MTSMappingId,MovieId,TheatreId,ShowId,StartDate,EndDate")] MTSMapping mTSMapping, int[] Shows)
         {
             if (ModelState.IsValid)
             {
-                db.MTSMappings.Add(mTSMapping);
+                List<MTSMapping> mTSMappingList = new List<MTSMapping>();
+                foreach (var item in Shows)
+                {
+                    var obj = new MTSMapping
+                    {
+                        ShowId = item,
+                        MovieId = mTSMapping.MovieId,
+                        TheatreId = mTSMapping.TheatreId,
+                        StartDate = mTSMapping.StartDate,
+                        EndDate = mTSMapping.EndDate
+                    }; 
+                    mTSMappingList.Add(obj);
+                }
+                db.MTSMappings.AddRange(mTSMappingList);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
             ViewBag.MovieId = new SelectList(db.Movies, "MovieId", "Name", mTSMapping.MovieId);
-            ViewBag.ShowId = new SelectList(db.ShowTimings, "ShowId", "ShowId", mTSMapping.ShowId);
+            ViewBag.Shows = ViewBag.ShowId = new SelectList(db.ShowTimings, "ShowId", "Time", mTSMapping.ShowId);
             ViewBag.TheatreId = new SelectList(db.Theatres, "TheatreId", "TheatreName", mTSMapping.TheatreId);
             return View(mTSMapping);
         }
@@ -79,7 +92,7 @@ namespace ShoppingCart.Controllers
                 return HttpNotFound();
             }
             ViewBag.MovieId = new SelectList(db.Movies, "MovieId", "Name", mTSMapping.MovieId);
-            ViewBag.ShowId = new SelectList(db.ShowTimings, "ShowId", "ShowId", mTSMapping.ShowId);
+            ViewBag.ShowId = new SelectList(db.ShowTimings, "ShowId", "Time", mTSMapping.ShowId);
             ViewBag.TheatreId = new SelectList(db.Theatres, "TheatreId", "TheatreName", mTSMapping.TheatreId);
             return View(mTSMapping);
         }
@@ -98,7 +111,7 @@ namespace ShoppingCart.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.MovieId = new SelectList(db.Movies, "MovieId", "Name", mTSMapping.MovieId);
-            ViewBag.ShowId = new SelectList(db.ShowTimings, "ShowId", "ShowId", mTSMapping.ShowId);
+            ViewBag.ShowId = new SelectList(db.ShowTimings, "ShowId", "Time", mTSMapping.ShowId);
             ViewBag.TheatreId = new SelectList(db.Theatres, "TheatreId", "TheatreName", mTSMapping.TheatreId);
             return View(mTSMapping);
         }

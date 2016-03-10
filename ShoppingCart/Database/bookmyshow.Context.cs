@@ -26,13 +26,13 @@ namespace ShoppingCart.Database
         }
     
         public virtual DbSet<BookingSeatMapping> BookingSeatMappings { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Movie> Movies { get; set; }
         public virtual DbSet<MovieBooking> MovieBookings { get; set; }
         public virtual DbSet<MTSMapping> MTSMappings { get; set; }
         public virtual DbSet<ShowTiming> ShowTimings { get; set; }
-        public virtual DbSet<Theatre> Theatres { get; set; }
-        public virtual DbSet<City> Cities { get; set; }
-        public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<State> States { get; set; }
+        public virtual DbSet<Theatre> Theatres { get; set; }
     }
 }

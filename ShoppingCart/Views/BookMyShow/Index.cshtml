@@ -1,0 +1,184 @@
+﻿
+@{
+    ViewBag.Title = "Book My Show";
+}
+
+<h2>Book My Show</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>MTSMapping</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.Label("MovieName")
+                @Html.DropDownList("MovieName", ViewBag.MovieName as SelectList, "Select a MovieName", new { id = "MovieName", @class = "form-control" })
+                @Html.ValidationMessage("MovieName", "*")
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.Label("TheatreName")
+                @Html.DropDownList("TheatreName", ViewBag.TheatreName as SelectList, "Select a TheatreName", new { id = "TheatreName", @class = "form-control" })
+                @Html.ValidationMessage("TheatreName", "*")
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.Label("Date")
+                <input type="date" id="showDate" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.Label("Show")
+                @Html.DropDownList("Show", ViewBag.MovieName as SelectList, "Select a Show", new { id = "Show", @class = "form-control" })
+                @Html.ValidationMessage("Show", "*")
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.Label("HOW MANY TICKETS?")
+                @Html.DropDownList("TicketCount", ViewBag.TicketCount as SelectList, "Select  TicketCount", new { id = "TicketCount", @class = "form-control" })
+                @Html.ValidationMessage("Show", "*")
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.Label("Select Row No")
+                <select id="RowNo"></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.Label("Select Column No")
+                <select id="ColumnNo"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.Label("Booked Seat Nos")
+                <div id="SeatMap"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Book My Show" id="finalBookMyShow" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+<input type="hidden" name="rows" value="0" />
+<input type="hidden" name="column" value="0" />
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "Home")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @*<script>
+            $(document).ready(function () {
+                var urlMovies = "@Url.Action("GetMovies", "BookMyShow")";
+                $.getJSON(urlMovies, function (data) {
+                    console.log(data);
+                    var movieId = $("#MovieName");
+                    var items = "<option value='0'>Select</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        items += "<option value='" + data[i].Key + "'>" + data[i].Value + "</option>";
+                    }
+                    $('#MovieName').html(items);
+                }).error(function myfunction(e) {
+                    console.log(e);
+                });
+            });
+        </script>*@
+
+    <script>
+
+        var urlTheatre = "@Url.Action("GetTheatre", "BookMyShow")";
+        var urlShows = "@Url.Action("GetShows", "BookMyShow")";
+        var urlSeatMap = "@Url.Action("GetSeatMap", "BookMyShow")";
+        $(function () {
+
+            $('#MovieName').change(function () {
+                $.getJSON(urlTheatre + "/" + $('#MovieName').val(), function (data) {
+                    var items = "<option value='0'>Select</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        items += "<option value='" + data[i].Value + "'>" + data[i].Text + "</option>";
+                    }
+                    $('#TheatreName').html(items);
+                });
+            });
+
+            $('#showDate').change(function () {
+                $.getJSON(urlShows + "?id=" + $('#MovieName').val() + "&id2=" + $('#TheatreName').val() + "&showDate=" + $('#showDate').val(), function (data) {
+                    var items = "<option value='0'>Select</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        items += "<option value='" + data[i].Value + "'>" + data[i].Text + "</option>";
+                    }
+                    $('#Show').html(items);
+                });
+            });
+
+            $('#Show').change(function () {
+                $.getJSON(urlSeatMap + "?id=" + $('#MovieName').val() + "&id2=" + $('#TheatreName').val() + "&id3=" + $('#Show').val() + "&showDate=" + $('#showDate').val(), function (data) {
+
+                    $("#rows").val(data.Row);
+                    $("#column").val(data.Column);
+
+                    var items = "<option value='0'>Select</option>";
+                    for (var i = 0; i < data.Row; i++) {
+                        items += "<option value='" + i + "'>" + i + "</option>";
+                    }
+                    $('#RowNo').html(items);
+
+                    items = "<option value='0'>Select</option>";
+                    for (var i = 0; i < data.Column; i++) {
+                        items += "<option value='" + i + "'>" + i + "</option>";
+                    }
+                    $('#ColumnNo').html(items);
+
+
+
+                    var seatMapHtml = '<table>';
+                    for (var i = 0; i < data.Row; i++) {
+                        seatMapHtml = seatMapHtml + '<tr>';
+                        for (var j = 0; j < data.Column; j++) {
+                            seatMapHtml = seatMapHtml + '<td> <a class="selected" id=' + i + "_" + j + '>' + j + '</a></td>';
+                        }
+                        seatMapHtml = seatMapHtml + '</tr>';
+                    }
+                    seatMapHtml += '</table>';
+                    for (var i = 0; i < data.BookedSeatsForTheShow.length; i++) {
+
+                    }
+                    $('#SeatMap').html(seatMapHtml);
+                });
+            });
+
+            $("#finalBookMyShow").click(function () {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("FinalBookMyShow", "BookMyShow")',
+                    data: {},
+                    success: function () {
+                        toastr.success("Done");
+                    },
+                    error: function () {
+                        toastr.error("Error")
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -5,24 +5,22 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="a30ce3ce01b543548a4a518265fbd1ce" Name="Diagram1">
-        <EntityTypeShape EntityType="BookingModel.BookingSeatMapping" Width="1.5" PointX="5.25" PointY="8.625" />
-        <EntityTypeShape EntityType="BookingModel.Movie" Width="1.5" PointX="0.75" PointY="8.5" />
-        <EntityTypeShape EntityType="BookingModel.MovieBooking" Width="1.5" PointX="3" PointY="3.625" />
-        <EntityTypeShape EntityType="BookingModel.MTSMapping" Width="1.5" PointX="6" PointY="4.125" />
-        <EntityTypeShape EntityType="BookingModel.ShowTiming" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="BookingModel.Theatre" Width="1.5" PointX="0.75" PointY="4.25" />
+        <EntityTypeShape EntityType="BookingModel.BookingSeatMapping" Width="1.5" PointX="7.5" PointY="1.5" />
+        <EntityTypeShape EntityType="BookingModel.City" Width="1.5" PointX="7.25" PointY="6" />
+        <EntityTypeShape EntityType="BookingModel.Country" Width="1.5" PointX="2.75" PointY="6.125" />
+        <EntityTypeShape EntityType="BookingModel.Movie" Width="1.5" PointX="0.75" PointY="7.625" />
+        <EntityTypeShape EntityType="BookingModel.MovieBooking" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="BookingModel.MTSMapping" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="BookingModel.ShowTiming" Width="1.5" PointX="0.75" PointY="5.125" />
+        <EntityTypeShape EntityType="BookingModel.State" Width="1.5" PointX="5" PointY="5.875" />
+        <EntityTypeShape EntityType="BookingModel.Theatre" Width="1.5" PointX="0.75" PointY="1.375" />
         <AssociationConnector Association="BookingModel.FK_BookingSeatMapping_MovieBookings" />
-        <AssociationConnector Association="BookingModel.FK_MovieBookings_Movies" />
-        <AssociationConnector Association="BookingModel.FK_MTSMapping_Movies" />
-        <AssociationConnector Association="BookingModel.FK_MovieBookings_ShowTimings" />
-        <AssociationConnector Association="BookingModel.FK_MovieBookings_Theatre" />
-        <AssociationConnector Association="BookingModel.FK_MTSMapping_ShowTimings" />
-        <AssociationConnector Association="BookingModel.FK_MTSMapping_Theatre" />
-        <EntityTypeShape EntityType="BookingModel.City" Width="1.5" PointX="9.875" PointY="1" />
-        <EntityTypeShape EntityType="BookingModel.Country" Width="1.5" PointX="5.375" PointY="1.125" />
-        <EntityTypeShape EntityType="BookingModel.State" Width="1.5" PointX="7.625" PointY="0.875" />
         <AssociationConnector Association="BookingModel.FK_City_State" />
         <AssociationConnector Association="BookingModel.FK_State_Country" />
+        <AssociationConnector Association="BookingModel.FK_MTSMapping_Movies" />
+        <AssociationConnector Association="BookingModel.FK_MovieBookings_MTSMapping" />
+        <AssociationConnector Association="BookingModel.FK_MTSMapping_ShowTimings" />
+        <AssociationConnector Association="BookingModel.FK_MTSMapping_Theatre" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

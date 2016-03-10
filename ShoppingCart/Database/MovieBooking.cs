@@ -22,10 +22,8 @@ namespace ShoppingCart.Database
     
         public int BookingId { get; set; }
         public string UserId { get; set; }
+        public int MTSMappingID { get; set; }
         public string PaidStatus { get; set; }
-        public int TheatreId { get; set; }
-        public int MovieId { get; set; }
-        public int ShowId { get; set; }
         public double TicketAmount { get; set; }
         public int NoOfSeats { get; set; }
         public System.DateTime BookingDate { get; set; }
@@ -33,8 +31,6 @@ namespace ShoppingCart.Database
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BookingSeatMapping> BookingSeatMappings { get; set; }
-        public virtual Movie Movie { get; set; }
-        public virtual ShowTiming ShowTiming { get; set; }
-        public virtual Theatre Theatre { get; set; }
+        public virtual MTSMapping MTSMapping { get; set; }
     }
 }

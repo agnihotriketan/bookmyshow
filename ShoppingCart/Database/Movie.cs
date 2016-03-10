@@ -17,7 +17,6 @@ namespace ShoppingCart.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Movie()
         {
-            this.MovieBookings = new HashSet<MovieBooking>();
             this.MTSMappings = new HashSet<MTSMapping>();
         }
     
@@ -29,8 +28,6 @@ namespace ShoppingCart.Database
         public string Medium { get; set; }
         public Nullable<bool> IsActive { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MovieBooking> MovieBookings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MTSMapping> MTSMappings { get; set; }
     }

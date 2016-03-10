@@ -17,6 +17,8 @@ namespace ShoppingCart.Database
         public int BookingShowSeatMappingId { get; set; }
         public Nullable<int> BookingId { get; set; }
         public string SeatNo { get; set; }
+        public Nullable<int> RowNo { get; set; }
+        public Nullable<int> ColumnNo { get; set; }
     
         public virtual MovieBooking MovieBooking { get; set; }
     }

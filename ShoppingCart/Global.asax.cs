@@ -1,9 +1,10 @@
-﻿ 
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Routing;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -25,7 +26,9 @@ namespace ShoppingCart
             ViewEngines.Engines.Clear(); // Clear Unused viewengines.
             ViewEngines.Engines.Add(new RazorViewEngine());
 
-          //  Bootstrapper.Run();
+            GlobalConfiguration.Configuration.Routes.Add("defaultsss", new HttpRoute("{Controller}"));
+
+            //  Bootstrapper.Run();
         }
         protected void Application_Error()
         {

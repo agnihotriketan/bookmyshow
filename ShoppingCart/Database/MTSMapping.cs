@@ -14,14 +14,23 @@ namespace ShoppingCart.Database
     
     public partial class MTSMapping
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public MTSMapping()
+        {
+            this.MovieBookings = new HashSet<MovieBooking>();
+        }
+    
         public int MTSMappingId { get; set; }
         public int MovieId { get; set; }
         public int TheatreId { get; set; }
         public int ShowId { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
+        public Nullable<bool> IsActive { get; set; }
     
         public virtual Movie Movie { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MovieBooking> MovieBookings { get; set; }
         public virtual ShowTiming ShowTiming { get; set; }
         public virtual Theatre Theatre { get; set; }
     }
