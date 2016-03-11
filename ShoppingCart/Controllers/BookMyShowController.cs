@@ -185,7 +185,7 @@ namespace ShoppingCart.Controllers
                         ShowDate = data.ShowDate
                     };
                     db.MovieBookings.Add(obj);
-                    db.SaveChanges();
+                    db.SaveChanges(); 
 
                     db.BookingSeatMappings.Add(new BookingSeatMapping {
                         BookingId=obj.BookingId,
@@ -193,6 +193,18 @@ namespace ShoppingCart.Controllers
                         RowNo = data.RowNo,
                         ColumnNo = data.ColumnNo,
                     });
+
+                    for (int i = 0; i < data.NoOfSeats - 1; i++)
+                    {
+                        db.BookingSeatMappings.Add(new BookingSeatMapping
+                        {
+                            BookingId = obj.BookingId,
+                            SeatNo = data.RowNo + "_" + data.ColumnNo+i,
+                            RowNo = data.RowNo,
+                            ColumnNo = data.ColumnNo,
+                        });
+                    }
+                    //avaibility check need to add through out the application add  handler for that 
 
                     db.SaveChanges();
 
