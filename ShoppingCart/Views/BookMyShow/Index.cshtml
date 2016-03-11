@@ -45,7 +45,19 @@
             <div class="col-md-4">
                 @Html.Label("HOW MANY TICKETS?")
                 @Html.DropDownList("TicketCount", ViewBag.TicketCount as SelectList, "Select  TicketCount", new { id = "TicketCount", @class = "form-control" })
+
                 @Html.ValidationMessage("Show", "*")
+
+                <p>
+                    dropdown 'll be changed to <div class="btn-group">
+                        <button type="button" class="btn btn-default">1</button>
+                        <button type="button" class="btn btn-primary">2</button>
+                        <button type="button" class="btn btn-primary">3</button>
+                        <button type="button" class="btn btn-primary">4</button>
+                        <button type="button" class="btn btn-primary">5</button>
+                        <button type="button" class="btn btn-primary">6</button>
+                    </div>
+                </p>
             </div>
         </div>
 
@@ -153,11 +165,11 @@
                     for (var i = 0; i < data.Row; i++) {
                         seatMapHtml = seatMapHtml + '<tr>';
                         for (var j = 0; j < data.Column; j++) {
-                            seatMapHtml = seatMapHtml + '<td> <a class="selected" id=' + i + "_" + j + '>' + j + '</a></td>';
+                            seatMapHtml = seatMapHtml + '<td> <a class="selected btn btn-primary" id=' + i + "_" + j + '>' + j + '</a></td>';
                         }
                         seatMapHtml = seatMapHtml + '</tr>';
                     }
-                    seatMapHtml += '</table>';
+                    seatMapHtml += '</table> <h5>Screen this way ..!</h5>';
                     for (var i = 0; i < data.BookedSeatsForTheShow.length; i++) {
 
                     }
@@ -166,8 +178,8 @@
             });
 
             $("#finalBookMyShow").click(function () {
-                var TheatreId=$('#TheatreName').val();
-                var MovieId = $('#MovieName').val() ;               
+                var TheatreId = $('#TheatreName').val();
+                var MovieId = $('#MovieName').val();
                 var ShowId = $('#Show').val();
                 var NoOfSeats = $("#TicketCount").val();
                 var ShowDate = $("#showDate").val();
@@ -175,9 +187,9 @@
                 var ColumnNo = $("#ColumnNo").val();
                 $.ajax({
                     type: 'POST',
-                    url: '@Url.Action("FinalBookMyShow", "BookMyShow")', 
+                    url: '@Url.Action("FinalBookMyShow", "BookMyShow")',
                     contentType: 'application/json',
-                    data:JSON.stringify( {
+                    data: JSON.stringify({
                         TheatreId: TheatreId,
                         MovieId: MovieId,
                         ShowId: ShowId,

@@ -99,7 +99,6 @@ D:\MyGit\bookmyshow\ShoppingCart\bin\roslyn\System.Reflection.Metadata.dll
 D:\MyGit\bookmyshow\ShoppingCart\bin\roslyn\vbc.exe
 D:\MyGit\bookmyshow\ShoppingCart\bin\roslyn\VBCSCompiler.exe
 D:\MyGit\bookmyshow\ShoppingCart\bin\roslyn\VBCSCompiler.exe.config
-D:\MyGit\bookmyshow\ShoppingCart\bin\ShoppingCart.dll.config
 D:\MyGit\bookmyshow\ShoppingCart\bin\ShoppingCart.dll
 D:\MyGit\bookmyshow\ShoppingCart\bin\ShoppingCart.pdb
 D:\MyGit\bookmyshow\ShoppingCart\bin\Antlr3.Runtime.dll
@@ -174,3 +173,4 @@ D:\MyGit\bookmyshow\ShoppingCart\bin\Microsoft.Owin.Security.MicrosoftAccount.xm
 D:\MyGit\bookmyshow\ShoppingCart\obj\Debug\ShoppingCart.dll
 D:\MyGit\bookmyshow\ShoppingCart\obj\Debug\ShoppingCart.pdb
 D:\MyGit\bookmyshow\ShoppingCart\obj\Debug\ShoppingCart.csprojResolveAssemblyReference.cache
+D:\MyGit\bookmyshow\ShoppingCart\bin\ShoppingCart.dll.config

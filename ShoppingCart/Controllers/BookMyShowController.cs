@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace ShoppingCart.Controllers
 {
+    [Authorize]
     public class BookMyShowController : Controller
     {
         private BookingEntities db = new BookingEntities();

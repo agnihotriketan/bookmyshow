@@ -77,7 +77,6 @@ D:\MyGit\bookmyshow\ShoppingCart.Tests\bin\Debug\roslyn\VBCSCompiler.exe.config
 D:\MyGit\bookmyshow\ShoppingCart.Tests\bin\Debug\ShoppingCart.Tests.dll.config
 D:\MyGit\bookmyshow\ShoppingCart.Tests\bin\Debug\ShoppingCart.Tests.dll
 D:\MyGit\bookmyshow\ShoppingCart.Tests\bin\Debug\ShoppingCart.Tests.pdb
-D:\MyGit\bookmyshow\ShoppingCart.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
 D:\MyGit\bookmyshow\ShoppingCart.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
 D:\MyGit\bookmyshow\ShoppingCart.Tests\bin\Debug\Newtonsoft.Json.dll
 D:\MyGit\bookmyshow\ShoppingCart.Tests\bin\Debug\ShoppingCart.dll
@@ -101,7 +100,6 @@ D:\MyGit\bookmyshow\ShoppingCart.Tests\bin\Debug\EntityFramework.dll
 D:\MyGit\bookmyshow\ShoppingCart.Tests\bin\Debug\System.Web.Http.WebHost.dll
 D:\MyGit\bookmyshow\ShoppingCart.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
 D:\MyGit\bookmyshow\ShoppingCart.Tests\bin\Debug\ShoppingCart.pdb
-D:\MyGit\bookmyshow\ShoppingCart.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
 D:\MyGit\bookmyshow\ShoppingCart.Tests\bin\Debug\Newtonsoft.Json.xml
 D:\MyGit\bookmyshow\ShoppingCart.Tests\bin\Debug\System.Web.Helpers.xml
 D:\MyGit\bookmyshow\ShoppingCart.Tests\bin\Debug\System.Web.Mvc.xml
@@ -124,3 +122,5 @@ D:\MyGit\bookmyshow\ShoppingCart.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.x
 D:\MyGit\bookmyshow\ShoppingCart.Tests\obj\Debug\ShoppingCart.Tests.csprojResolveAssemblyReference.cache
 D:\MyGit\bookmyshow\ShoppingCart.Tests\obj\Debug\ShoppingCart.Tests.dll
 D:\MyGit\bookmyshow\ShoppingCart.Tests\obj\Debug\ShoppingCart.Tests.pdb
+D:\MyGit\bookmyshow\ShoppingCart.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\MyGit\bookmyshow\ShoppingCart.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
