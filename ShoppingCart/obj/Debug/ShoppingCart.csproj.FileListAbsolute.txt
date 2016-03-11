@@ -173,3 +173,4 @@ D:\MyGit\bookmyshow\ShoppingCart\bin\Microsoft.Owin.Security.Twitter.xml
 D:\MyGit\bookmyshow\ShoppingCart\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\MyGit\bookmyshow\ShoppingCart\obj\Debug\ShoppingCart.dll
 D:\MyGit\bookmyshow\ShoppingCart\obj\Debug\ShoppingCart.pdb
+D:\MyGit\bookmyshow\ShoppingCart\obj\Debug\ShoppingCart.csprojResolveAssemblyReference.cache

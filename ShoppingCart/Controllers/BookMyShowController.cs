@@ -1,4 +1,7 @@
-﻿using ShoppingCart.Database;
+﻿using ShoppingCart.DAL.InterFaces;
+using ShoppingCart.DAL.Services;
+using ShoppingCart.Database;
+using ShoppingCart.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +13,10 @@ namespace ShoppingCart.Controllers
     public class BookMyShowController : Controller
     {
         private BookingEntities db = new BookingEntities();
+        GenericCrudOperations<Country> dbCon = new GenericCrudOperations<Country>(new BookingEntities());
         // GET: BookMyShow
         public ActionResult Index()
         {
-
             using (var db = new BookingEntities())
             {
                 var data = db.Movies;
@@ -136,7 +139,7 @@ namespace ShoppingCart.Controllers
                     var rows = Convert.ToInt32(objTh.FirstOrDefault().Rows.ToString());
                     var column = Convert.ToInt32(objTh.FirstOrDefault().SeatsPerRows.ToString());
 
-                    
+
                     var bookedSeatsForTheShow = db.BookingSeatMappings.Where(i => i.MovieBooking.MTSMapping.MovieId == id
                                                 && i.MovieBooking.MTSMapping.TheatreId == id2
                                                 && i.MovieBooking.MTSMapping.ShowId == id3
@@ -145,7 +148,7 @@ namespace ShoppingCart.Controllers
                     {
                         Row = rows,
                         Column = column,
-                        BookedSeatsForTheShow=bookedSeatsForTheShow
+                        BookedSeatsForTheShow = bookedSeatsForTheShow
                     };
                     /*var seatMap = new int[rows, column];
                     for (int i = 0; i < bookedSeatsForTheShow.Count; i++)
@@ -164,18 +167,37 @@ namespace ShoppingCart.Controllers
         }
 
         [HttpPost]
-        public bool FinalBookMyShow(MovieBooking obj)
+        public bool FinalBookMyShow(MovieBookingViewModels data)
         {
             try
             {
                 using (var db = new BookingEntities())
                 {
+                    var mtsId = db.MTSMappings.FirstOrDefault(i => i.MovieId == data.MovieId && i.TheatreId == data.TheatreId && i.ShowId == data.ShowId).MTSMappingId;
+                    var ticketAmount = db.ShowTimings.FirstOrDefault(i => i.ShowId == data.ShowId).Rate;
+                    var obj = new MovieBooking
+                    {
+                        UserId = User.Identity.Name,
+                        MTSMappingID = mtsId,
+                        TicketAmount = ticketAmount,
+                        NoOfSeats = data.NoOfSeats,
+                        BookingDate = DateTime.Now,
+                        ShowDate = data.ShowDate
+                    };
                     db.MovieBookings.Add(obj);
-                    db.BookingSeatMappings.Add(new BookingSeatMapping { });
-                    db.SaveChangesAsync();
+                    db.SaveChanges();
+
+                    db.BookingSeatMappings.Add(new BookingSeatMapping {
+                        BookingId=obj.BookingId,
+                        SeatNo = data.RowNo + "_" + data.ColumnNo,
+                        RowNo = data.RowNo,
+                        ColumnNo = data.ColumnNo,
+                    });
+
+                    db.SaveChanges();
 
                 }
-                    return true;
+                return true;
             }
             catch (Exception)
             {
@@ -188,7 +210,7 @@ namespace ShoppingCart.Controllers
         {
             public int Row { get; set; }
             public int Column { get; set; }
-            public List<BookingSeatMapping> BookedSeatsForTheShow; 
+            public List<BookingSeatMapping> BookedSeatsForTheShow;
         }
 
     }

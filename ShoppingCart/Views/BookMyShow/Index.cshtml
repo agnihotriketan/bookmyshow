@@ -48,18 +48,18 @@
                 @Html.ValidationMessage("Show", "*")
             </div>
         </div>
-        
+
         <div class="form-group">
             <div class="col-md-12">
                 @Html.Label("Select Row No")
-                <select id="RowNo"></select>
+                <select id="RowNo" class="form-control"></select>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-12">
                 @Html.Label("Select Column No")
-                <select id="ColumnNo"></select>
+                <select id="ColumnNo" class="form-control"></select>
             </div>
         </div>
         <div class="form-group">
@@ -166,11 +166,26 @@
             });
 
             $("#finalBookMyShow").click(function () {
-
+                var TheatreId=$('#TheatreName').val();
+                var MovieId = $('#MovieName').val() ;               
+                var ShowId = $('#Show').val();
+                var NoOfSeats = $("#TicketCount").val();
+                var ShowDate = $("#showDate").val();
+                var RowNo = $("#RowNo").val();
+                var ColumnNo = $("#ColumnNo").val();
                 $.ajax({
                     type: 'POST',
-                    url: '@Url.Action("FinalBookMyShow", "BookMyShow")',
-                    data: {},
+                    url: '@Url.Action("FinalBookMyShow", "BookMyShow")', 
+                    contentType: 'application/json',
+                    data:JSON.stringify( {
+                        TheatreId: TheatreId,
+                        MovieId: MovieId,
+                        ShowId: ShowId,
+                        NoOfSeats: NoOfSeats,
+                        ShowDate: ShowDate,
+                        RowNo: RowNo,
+                        ColumnNo: ColumnNo
+                    }),
                     success: function () {
                         toastr.success("Done");
                     },
@@ -179,6 +194,8 @@
                     }
                 });
             });
+
+
         });
     </script>
 }
